@@ -1,315 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Happy Birthday 🎉</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #050816;
-      --accent: #ffb347;
-      --accent2: #ff6fb5;
-      --text: #ffffff;
-      --card-bg: rgba(10, 10, 25, 0.92);
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro", sans-serif;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday 💜</title>
+<style>
+:root {
+  --bg: #0a0014;
+  --accent: #9d4edd;
+  --accent2: #e0aaff;
+  --text: #f5f3ff;
+  --card-bg: rgba(25, 10, 40, 0.9);
+  --font-main: "Poppins", system-ui, sans-serif;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #1b1b3a, #050816);
-      color: var(--text);
-      font-family: var(--font-main);
-      overflow: hidden;
-    }
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #1a0033, var(--bg));
+  overflow: hidden;
+  color: var(--text);
+  font-family: var(--font-main);
+}
 
-    .stars {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.18) 0, transparent 40%),
-        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.1) 0, transparent 45%),
-        radial-gradient(circle at 50% 90%, rgba(255,255,255,0.08) 0, transparent 40%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-      opacity: 0.5;
-      animation: glow 8s ease-in-out infinite alternate;
-    }
+/* 🌠 Star field */
+.stars {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  overflow: hidden;
+  z-index: -1;
+}
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--accent2);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: twinkle 3s ease-in-out infinite, drift 60s linear infinite;
+}
+@keyframes twinkle {
+  0%,100% {opacity: 0.2;}
+  50% {opacity: 1;}
+}
+@keyframes drift {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(100vh);}
+}
 
-    @keyframes glow {
-      from { opacity: 0.3; }
-      to { opacity: 0.7; }
-    }
+/* 📜 Card */
+.container {
+  width: min(420px, 92vw);
+  padding: 22px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 60px rgba(50,0,90,0.8);
+  text-align: center;
+}
 
-    .container {
-      position: relative;
-      width: min(420px, 92vw);
-      padding: 22px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
-      backdrop-filter: blur(18px);
-      box-shadow: 0 18px 60px rgba(0,0,0,0.8);
-      overflow: hidden;
-    }
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent2);
+  text-shadow: 0 0 8px rgba(160, 100, 255, 0.8);
+}
+.sub { font-size: 13px; margin-top: 4px; color: rgba(255,255,255,0.7); }
 
-    .tag {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-    }
+/* 💌 Envelope */
+.envelope-wrap { margin-top: 18px; display: flex; justify-content: center; }
+.envelope {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  background: var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+.envelope:hover { transform: translateY(-3px) scale(1.03); }
+.flap {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom right, var(--accent2), var(--accent));
+  clip-path: polygon(0 0, 100% 0, 50% 62%);
+  transform-origin: top;
+  transition: transform 0.5s ease;
+  z-index: 3;
+}
+.paper {
+  position: absolute; inset: 12px;
+  background: #f5f3ff;
+  border-radius: 8px;
+  transform: translateY(40%);
+  opacity: 0;
+  transition: all 0.6s ease;
+  display: flex; align-items: center; justify-content: center;
+  color: #1a0033; font-weight: 600;
+}
+.envelope.open .flap { transform: rotateX(180deg); }
+.envelope.open .paper { transform: translateY(-40%); opacity: 1; }
 
-    .title {
-      font-size: 26px;
-      font-weight: 700;
-      margin-top: 4px;
-      color: var(--accent);
-    }
+/* 🎉 Message */
+.message {
+  margin-top: 22px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+  min-height: 80px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
+  white-space: pre-line;
+}
+.message.show { opacity: 1; transform: translateY(0); }
+.signature {
+  margin-top: 16px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  text-align: right;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.5s ease 0.1s;
+}
+.signature.show { opacity: 1; transform: translateY(0); }
 
-    .sub {
-      font-size: 13px;
-      margin-top: 4px;
-      color: rgba(255,255,255,0.7);
-    }
-
-    .envelope-wrap {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .envelope {
-      position: relative;
-      width: 200px;
-      height: 120px;
-      background: var(--accent);
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      cursor: pointer;
-      transform-origin: center bottom;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
-    }
-
-    .envelope:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-    }
-
-    .flap {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom right, var(--accent2), var(--accent));
-      clip-path: polygon(0 0, 100% 0, 50% 62%);
-      transform-origin: top;
-      transition: transform 0.5s ease;
-      z-index: 3;
-    }
-
-    .paper {
-      position: absolute;
-      inset: 12px;
-      background: #ffffff;
-      border-radius: 8px;
-      transform: translateY(40%);
-      opacity: 0;
-      transition: all 0.6s ease;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #111827;
-      font-size: 13px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .envelope.open .flap {
-      transform: rotateX(180deg);
-    }
-
-    .envelope.open .paper {
-      transform: translateY(-40%);
-      opacity: 1;
-    }
-
-    .tap-hint {
-      margin-top: 8px;
-      font-size: 11px;
-      text-align: center;
-      color: rgba(255,255,255,0.6);
-      animation: hint 1.8s ease-in-out infinite;
-    }
-
-    @keyframes hint {
-      0%, 100% { opacity: 0.25; transform: translateY(0); }
-      50% { opacity: 0.9; transform: translateY(-2px); }
-    }
-
-    .message {
-      margin-top: 22px;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.9);
-      min-height: 80px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.6s ease;
-      white-space: pre-line;
-    }
-
-    .message.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .signature {
-      margin-top: 16px;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.7);
-      text-align: right;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all 0.5s ease 0.1s;
-    }
-
-    .signature.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .confetti {
-      position: fixed;
-      width: 6px;
-      height: 10px;
-      background: var(--accent);
-      top: -20px;
-      left: 50%;
-      opacity: 0.9;
-      transform: translateX(-50%);
-      pointer-events: none;
-      animation: fall 1.4s linear forwards;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translate3d(calc(-50% + (random(-120px,120px))), 105vh, 0)
-                   rotateZ(340deg);
-        opacity: 0;
-      }
-    }
-
-    .small-note {
-      margin-top: 10px;
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      text-align: center;
-    }
-  </style>
+/* 🎵 Music button */
+#music-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--accent);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 48px; height: 48px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+#music-btn:hover { transform: scale(1.1); background: var(--accent2); color: var(--bg); }
+</style>
 </head>
 <body>
-  <div class="stars"></div>
 
-  <div class="container">
-    <div class="tag">FOR YOU 💌</div>
-    <div class="title">Happy Birthday, <span id="name">[Name]</span> 🥳</div>
-    <div class="sub">Tap the envelope. I made this just for you.</div>
+<div class="stars" id="stars"></div>
 
-    <div class="envelope-wrap">
-      <div class="envelope" id="envelope">
-        <div class="flap"></div>
-        <div class="paper">
-          <span>Click to reveal your message 🎁</span>
-        </div>
-      </div>
-    </div>
-    <div class="tap-hint">click / tap to open</div>
+<div class="container">
+  <div class="title">Happy Birthday, <span id="name">[Name]</span> 💜</div>
+  <div class="sub">Tap the envelope — I made this for you.</div>
 
-    <div class="message" id="message"></div>
-    <div class="signature" id="signature"></div>
-
-    <div class="small-note">
-      (If this is glitchy, try rotating your phone.)
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="paper"><span>Click to reveal your message 🎁</span></div>
     </div>
   </div>
 
-  <script>
-    // 🔧 CUSTOMIZE THESE
-    const receiverName = "[Hoor]";
-    const mainMessage =  
-`Happy Birthday, [Name]! 🎉
+  <div class="message" id="message"></div>
+  <div class="signature" id="signature"></div>
+</div>
 
-I hope you don't think all I did was send an e-card, 
-I made you your own little website. To show you what my IT major can do.
+<!-- 🎶 Background Music -->
+<audio id="bg-music" src="https://cdn.pixabay.com/download/audio/2023/04/02/audio_0c5d7f67d7.mp3?filename=purple-dream-120866.mp3" loop></audio>
+<button id="music-btn">🎵</button>
 
-Thank you for being in my life,
-for the laughs, the late-night talks,
-and for being you.
+<script>
+// ✨ PERSONALIZE
+const receiverName = "Hoor";
+const mainMessage = `Happy Birthday 💜
 
-I hope this year brings you more peace,
-and more moments you'll never forget. 💛`;
+I hope you didn't really think I had nothing else
+prepared for you. This is what my "IT" major can do.
 
-    const fromSignature = "- From [Your Name]";
+Here’s a little galaxy I made for you,
+where everything glows in your color.
 
-    // 🔽 No need to touch below unless you want to
-    document.getElementById("name").textContent = receiverName;
+Thank you for being you, and I wish you 
+the same warmth and happiness you bring 
+to the world.`;
+const fromSignature = "- From F";
 
-    const envelope = document.getElementById("envelope");
-    const messageEl = document.getElementById("message");
-    const sigEl = document.getElementById("signature");
+document.getElementById("name").textContent = receiverName;
 
-    let opened = false;
+// Envelope + typewriter
+const envelope = document.getElementById("envelope");
+const messageEl = document.getElementById("message");
+const sigEl = document.getElementById("signature");
+const music = document.getElementById("bg-music");
+const musicBtn = document.getElementById("music-btn");
+let opened = false, playing = false;
 
-    envelope.addEventListener("click", () => {
-      if (opened) return;
-      opened = true;
-      envelope.classList.add("open");
-      setTimeout(() => {
-        typeText(messageEl, mainMessage, () => {
-          sigEl.textContent = fromSignature;
-          sigEl.classList.add("show");
-        });
-        launchConfetti(110);
-      }, 550);
+envelope.addEventListener("click", () => {
+  if (opened) return;
+  opened = true;
+  envelope.classList.add("open");
+  setTimeout(() => {
+    typeText(messageEl, mainMessage, () => {
+      sigEl.textContent = fromSignature;
+      sigEl.classList.add("show");
     });
+    if (!playing) { music.play(); playing = true; musicBtn.textContent = "⏸"; }
+  }, 550);
+});
 
-    function typeText(element, text, callback) {
-      element.classList.add("show");
-      let i = 0;
-      function step() {
-        if (i <= text.length) {
-          element.textContent = text.slice(0, i);
-          i++;
-          setTimeout(step, 16);
-        } else if (callback) {
-          callback();
-        }
-      }
-      step();
-    }
+musicBtn.addEventListener("click", () => {
+  if (!playing) { music.play(); playing = true; musicBtn.textContent = "⏸"; }
+  else { music.pause(); playing = false; musicBtn.textContent = "🎵"; }
+});
 
-    function launchConfetti(count) {
-      for (let i = 0; i < count; i++) {
-        const c = document.createElement("div");
-        c.className = "confetti";
-        const left = Math.random() * 100;
-        const delay = Math.random() * 0.9;
-        const scale = 0.6 + Math.random() * 0.9;
-        c.style.left = left + "vw";
-        c.style.animationDelay = delay + "s";
-        c.style.transform = `translateY(-20px) scale(${scale})`;
-        c.style.background = Math.random() > 0.5 ? "var(--accent)" : "var(--accent2)";
-        document.body.appendChild(c);
-        setTimeout(() => c.remove(), 2200);
-      }
-    }
-  </script>
+function typeText(element, text, callback) {
+  element.classList.add("show");
+  let i = 0;
+  (function step() {
+    if (i <= text.length) {
+      element.textContent = text.slice(0, i);
+      i++;
+      setTimeout(step, 40);
+    } else if (callback) callback();
+  })();
+}
+
+/* 🌠 generate stars dynamically */
+const starField = document.getElementById("stars");
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement("div");
+  s.className = "star";
+  s.style.top = Math.random() * 100 + "vh";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDelay = Math.random() * 3 + "s";
+  s.style.animationDuration = 2 + Math.random() * 3 + "s";
+  s.style.width = s.style.height = Math.random() > 0.7 ? "3px" : "2px";
+  starField.appendChild(s);
+}
+</script>
 </body>
 </html>
